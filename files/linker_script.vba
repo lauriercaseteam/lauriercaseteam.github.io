@@ -19,7 +19,7 @@ Sub InsertLinkTextbox(current_slide As Slide, dest_slide_idx As Integer, link_te
     ' Left offset, Top offset, Width, Height
     Set oSh = current_slide.Shapes.AddTextbox(msoTextOrientationHorizontal, loc_x, loc_y, 200, 30)
     With oSh.TextFrame.TextRange
-    .text = link_text
+    .Text = link_text
     With .Font
             .Size = 14
             .Name = "Arial"
@@ -60,9 +60,10 @@ Sub linker()
 
     ' Go over all slides after the appendix map slide
     For i = app_slide_idx + 1 To num_slides
+        slide_title = ActivePresentation.Slides(i).Shapes.Title.TextFrame.TextRange.Text
     
         ' For every slide, ask what text box text does the user want
-        box_prompt = "What is the link title for slide " & i & " ?" & " If you want to skip to the next slide, leave input box blank and press 'ok'"
+        box_prompt = "What is the link title for slide " & i & ":  " & slide_title & "?" & vbCrLf & "If you want to skip to the next slide, leave input box blank and press 'ok'"
         link_text = InputBox(box_prompt)
         dest_slide = i
         
@@ -91,4 +92,3 @@ Sub linker()
         DrawButtonBox current_slide, app_slide_idx
     Next i
 End Sub
-
